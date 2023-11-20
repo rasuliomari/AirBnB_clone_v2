@@ -15,7 +15,7 @@ class FileStorage:
     __file_path = 'file.json'
     __objects = {}
 
-     @classmethod
+    @classmethod
     def classes(cls):
         """Returns a dictionary of model classes"""
         return {
@@ -33,7 +33,8 @@ class FileStorage:
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
-        FileStorage.__objects[obj.to_dict()['__class__'] + '.' + obj.id] = obj
+        key = obj.__class__.__name__ + '.' + obj.id
+        FileStorage.__objects[key] = obj
 
     def save(self):
         """Saves storage dictionary to file"""
