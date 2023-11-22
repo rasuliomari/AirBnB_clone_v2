@@ -1,16 +1,15 @@
-#!/usr/bin/python3
-
-""" State Module for HBNB project """
-from models.base_model import BaseModel, Base
+"""Defines the Amenity class."""
+from models.base_model import Base
+from models.base_model import BaseModel
+from sqlalchemy import Column
+from sqlalchemy import String
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, String, ForeignKey
-from models.place import place_amenity
+
 
 class Amenity(BaseModel, Base):
-    """
-    This is the class for Amenity
+    """Represents an Amenity for a MySQL database
     """
     __tablename__ = "amenities"
-
     name = Column(String(128), nullable=False)
-    place_amenities = relationship("Place", secondary=place_amenity)
+    place_amenities = relationship("Place", secondary="place_amenity",
+                                   viewonly=False)
