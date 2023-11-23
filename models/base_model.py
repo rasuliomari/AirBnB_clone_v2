@@ -18,16 +18,9 @@ class BaseModel:
         created_at (sqlalchemy DateTime): creation datetime
         updated_at (sqlalchemy DateTime): last update datetime
     """
-    id = Column(String(60),
-            primary_key=True, 
-            nullable=False,
-            unique=True)
-    created_at = Column(DateTime,
-            nullable=False,
-            default=datetime.utcnow)
-    updated_at = Column(DateTime,
-            nullable=False, 
-            default=datetime.utcnow)
+    id = Column(String(60), primary_key=True, nullable=False, unique=True)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow)
 
     def __init__(self, *args, **kwargs):
         """Initializes a new BaseModel instance"""
@@ -39,19 +32,20 @@ class BaseModel:
             for key in kwargs:
                 if key in ['created_at', 'updated_at']:
                     setattr(self, key, datetime.fromisoformat(kwargs[key]))
-                elif k != '__class__':
+                elif key != '__class__':
                     setattr(self, key, kwargs[key])
             if storage_type == 'db':
                 if not hasattr(kwargs, 'id'):
                     setattr(self, 'id', str(uuid.uuid4()))
                 if not hasattr(kwargs, 'created_at'):
-                     setattr(self, 'created_at', datetime.now())
+                    setattr(self, 'created_at', datetime.now())
                 if not hasattr(kwargs, 'updated_at'):
-                     setattr(self, 'updated_at', datetime.now())
+                    setattr(self, 'updated_at', datetime.now())
 
     def __str__(self):
         """Returns a string representation of the BaseModel instance"""
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}"
+        .format(self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
         """Updates the updated_at attribute with the current datetime
