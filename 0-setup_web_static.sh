@@ -9,8 +9,8 @@ mkdir -p /data/web_static/shared/
 echo "Hello World" > /data/web_static/releases/test/index.html
 ln -sf /data/web_static/releases/test/ /data/web_static/current
 
-chown -R ubuntu /data/
-chgrp -R ubuntu /data/
+chown -R ubuntu:ubuntu /data/
+chgrp -R ubuntu:ubuntu /data/
 
 printf %s "server {
     listen 80 default_server;
@@ -34,5 +34,4 @@ printf %s "server {
       internal;
     }
 }" > /etc/nginx/sites-available/default
-
-service nginx restart
+sudo service nginx restart
